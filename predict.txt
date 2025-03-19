@@ -1,0 +1,2 @@
+yolo predict model=runs/detect/train11/weights/best.pt source=test/img-2.jpg
+yolo export model=runs/detect/train11/weights/best.pt format=onnx
