@@ -4,7 +4,7 @@ From compose dataset to deploy on UAVs
 ## Setup CUDA environment (Nvidia GPU required,better if with 10GB+ video memory )
 * install CUDA
   ```bash
-  #check cuda verison
+  #check adoptable cuda verison
   $bash
   nvidia-smi
   ```
@@ -18,13 +18,35 @@ From compose dataset to deploy on UAVs
 * check environment
   ```bash
   $bash
-  cd /test
-  python test_cuda_env.py
-  ```
+  cd path/to/cuda/demo_suite # for example C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.5\extras\demo_suite
+  .\bandwidthTest.exe
 
-## Download Yolo code
-* see [ultralytics](https://docs.ultralytics.com/zh)
-* Yolov8 on [Yolov8](https://docs.ultralytics.com/models/yolov8/)
+  ```
+  output
+  ```
+  [CUDA Bandwidth Test] - Starting...
+  Running on...
+
+  Device 0: NVIDIA GeForce RTX 4080 Laptop GPU
+  Quick Mode
+
+  Host to Device Bandwidth, 1 Device(s)
+  PINNED Memory Transfers
+  Transfer Size (Bytes)        Bandwidth(MB/s)
+  33554432                     12707.6
+
+  Device to Host Bandwidth, 1 Device(s)
+  PINNED Memory Transfers
+  Transfer Size (Bytes)        Bandwidth(MB/s)
+  33554432                     12803.5
+
+  Device to Device Bandwidth, 1 Device(s)
+  PINNED Memory Transfers
+  Transfer Size (Bytes)        Bandwidth(MB/s)
+  33554432                     149433.4
+
+  Result = PASS
+  ```
 ## Dependent installation
 * Create isolated conda envs
   ```shell
@@ -43,19 +65,21 @@ From compose dataset to deploy on UAVs
   (Yolov8) conda install pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 pytorch-cuda=12.1 -c pytorch -c nvidia 
   
 
-* PiP(change pytorch CUDA version in **requirements.txt** to your vision)
+* install ultralytics
+
+  yolo core code is packed in ultralytics lib  
   ```shell
   $conda shell
   (Yolov8) cd /path/to/Yolo 
-  (Yolov8) pip install -r requirements.txt
+  (Yolov8) pip install ultralytics
   ```
 
 * clone ultralytics git repo
   ```bash
-  $git
+  $git bash
   git clone https://github.com/ultralytics/ultralytics
   ```
-  all models are included in the repo,so just clone the newest
+  all models are included in the repo,so just clone the newest one
 
 
 ## Train
@@ -63,16 +87,18 @@ From compose dataset to deploy on UAVs
 * Labelimg
   download labelimg on [labelimg](https://github.com/HumanSignal/labelImg)
 
-  **build labelimg** on windows
-  ```shell
-  $conda shell
-  (base)conda create -n Labelimg python=3.8
-  (base)conda activate Labelimg
-  (Labelimg)conda install pyqt=5
-  (Labelimg)conda install -c anaconda lxml
-  (Labelimg)pyrcc5 -o libs/resources.py resources.qrc
-  (Labelimg)python labelImg.py#run labelImg
-  (Labelimg)python labelImg.py [path/to/images] [path/to/prebuild/label.txt] #todo find save dir
+ * **build labelimg** on windows
+    ```shell
+    $conda shell
+    (base)conda create -n Labelimg python=3.8
+    (base)conda activate Labelimg
+    (Labelimg)conda install pyqt=5
+    (Labelimg)conda install -c anaconda lxml
+    (Labelimg)cd path/to/labelimg #change to you dir
+    (Labelimg)pyrcc5 -o libs/resources.py resources.qrc
+    (Labelimg)python labelImg.py  #run labelImg
+    (Labelimg)python labelImg.py [path/to/images] [path/to/prebuild/label.txt] #todo find save dir
+    ```
 
 * The procedure to create train/val/test files is automated by using **generate_dataset.py** 
   ```bash
@@ -149,17 +175,44 @@ From compose dataset to deploy on UAVs
   └── val.txt                # val dataset path .txt file
 
   ```
+  
 ### Build the training dataset.yaml configuration file
 * Reference ball.yaml
   ```
- 
+  path: ./dataset # dataset root dir
+  train: train.txt # train images (relative to 'path')
+  val: val.txt # val images (relative to 'path')
+  test: test.txt # test images (relative to 'path')
+
+  # Classes
+  names:
+    0: person
+    1: bicycle
+    2: car
+    3: motorcycle
+    4: airplane
   ```
 ### Train
-* Perform training tasks
+* modify yolov8.yaml in ultralytics git repo at *ultralytics\ultralytics\cfg\models\v8*
   ```
+  ...
+  nc:6 #change the number to match your dataset.yaml
+  ...
+  #no other change needed
+  ```
+* Perform training tasks in CLI
+  ```shell
   $conda shell
-  (Yolov8)yolo task=detect mode=train model=yolov8s.pt data=ball.yaml epochs=1000 batch=16
+  (Yolov8)path/to/ultralytics> yolo task=detect mode=train model=yolov8s.yaml pretrained= yolov8s.pt data=dataset.yaml epochs=300 batch=16
   ```
+* Perform training tasks using Python API
+  ```bash
+  $bash
+  python train.py#change parameters in train.py
+  ```
+  the parameter *model* will call yolov8n if you use the name yolov8n.yaml 
+  
+  using pretrained model to enhance the performance of your model, the pretrained model will be downloaded automatically when you call the model
 ### Evaluation 
 * Calculate map evaluation
   ```shell
@@ -176,27 +229,8 @@ From compose dataset to deploy on UAVs
   ```
 # Deploy
 ## Export onnx
-* You can export .onnx by adding the --onnx option when executing test.py
+* 
   ```
-  python3 test.py --yaml configs/coco.yaml --weight weights/weight_AP05:0.253207_280-epoch.pth --img data/3.jpg --onnx
   ```
-## Export torchscript
-* You can export .pt by adding the --torchscript option when executing test.py
-  ```
-  python3 test.py --yaml configs/coco.yaml --weight weights/weight_AP05:0.253207_280-epoch.pth --img data/3.jpg --torchscript
-  ```
-## NCNN
-* Need to compile ncnn and opencv in advance and modify the path in build.sh
-  ```
-  cd example/ncnn/
-  sh build.sh
-  ./FastestDet
-  ```
-## onnx-runtime
-* You can learn about the pre and post-processing methods of FastestDet in this Sample
-  ```
-  cd example/onnx-runtime
-  pip install onnx-runtime
-  python3 runtime.py
-  ```
-This instruction is written by Fangyao Zhao at HUST/Berkeley nicknamed as liyuu1ove on github,following the MIT license,please be careful when you spread it
+
+*This instruction is written by Fangyao Zhao at HUST/Berkeley nicknamed as liyuu1ove on github,following the MIT license,please be careful when you spread it*
