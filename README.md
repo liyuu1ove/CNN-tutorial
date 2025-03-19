@@ -50,11 +50,31 @@ From compose dataset to deploy on UAVs
   (Yolov8) pip install -r requirements.txt
   ```
 
+* clone ultralytics git repo
+  ```bash
+  $git
+  git clone https://github.com/ultralytics/ultralytics
+  ```
+  all models are included in the repo,so just clone the newest
+
 
 ## Train
 ### Building data sets(standard yolo format)
 * Labelimg
-* The procedure is automated by using **generate_dataset.py** 
+  download labelimg on [labelimg](https://github.com/HumanSignal/labelImg)
+
+  **build labelimg** on windows
+  ```shell
+  $conda shell
+  (base)conda create -n Labelimg python=3.8
+  (base)conda activate Labelimg
+  (Labelimg)conda install pyqt=5
+  (Labelimg)conda install -c anaconda lxml
+  (Labelimg)pyrcc5 -o libs/resources.py resources.qrc
+  (Labelimg)python labelImg.py#run labelImg
+  (Labelimg)python labelImg.py [path/to/images] [path/to/prebuild/label.txt] #todo find save dir
+
+* The procedure to create train/val/test files is automated by using **generate_dataset.py** 
   ```bash
   $bash:
   python generate_dateset
@@ -129,27 +149,10 @@ From compose dataset to deploy on UAVs
   └── val.txt                # val dataset path .txt file
 
   ```
-### Build the training .yaml configuration file
-* Reference./configs/coco.yaml
+### Build the training dataset.yaml configuration file
+* Reference ball.yaml
   ```
-  DATASET:
-    TRAIN: "/home/qiuqiu/Desktop/coco2017/train2017.txt"  # Train dataset path .txt file
-    VAL: "/home/qiuqiu/Desktop/coco2017/val2017.txt"      # Val dataset path .txt file 
-    NAMES: "dataset/coco128/coco.names"                   # .names category label file
-  MODEL:
-    NC: 80                                                # Number of detection categories
-    INPUT_WIDTH: 352                                      # The width of the model input image
-    INPUT_HEIGHT: 352                                     # The height of the model input image
-  TRAIN:
-    LR: 0.001                                             # Train learn rate
-    THRESH: 0.25                                          
-    WARMUP: true                                          # Trun on warm up
-    BATCH_SIZE: 64                                        # Batch size
-    END_EPOCH: 350                                        # Train epichs
-    MILESTIONES:                                          # Declining learning rate steps
-      - 150
-      - 250
-      - 300
+ 
   ```
 ### Train
 * Perform training tasks

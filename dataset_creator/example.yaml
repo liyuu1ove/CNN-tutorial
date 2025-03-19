@@ -1,0 +1,21 @@
+# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
+# Documentation: https://docs.ultralytics.com/datasets/detect/
+# Example usage: yolo train data=example.yaml
+# parent
+# ├── ultralytics
+#     └── datasets
+#     └── example.yaml
+
+path: ./dataset # dataset root dir
+train: train.txt # train images (relative to 'path')
+val: val.txt # val images (relative to 'path')
+test: test.txt 
+
+# Classes
+names:
+  0: person
+  1: bicycle
+  2: car
+  3: motorcycle
+  4: airplane

@@ -1,2 +1,2 @@
-yolo predict model=runs/detect/train11/weights/best.pt source=test/img-2.jpg
+yolo predict model=C:\Users\86183\Desktop\ultralytics\runs\detect\train2\weights\best source=C:\Users\86183\Desktop\DNNmanual\dataset_creator\dataset\test
 yolo export model=runs/detect/train11/weights/best.pt format=onnx

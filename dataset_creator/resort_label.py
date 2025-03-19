@@ -1,9 +1,9 @@
 import os
 
 def file_rename():
-    num = 0
+    num = 202
     source_dir = "./raw"
-    target_dir = "./dataset/data"
+    target_dir = "./dataset/new"
     filelist = os.listdir(source_dir)
     for file in filelist:
         Olddir = os.path.join(source_dir, file)    #原来的文件路径

@@ -6,7 +6,7 @@ import time
 import cv2
 import numpy as np
 
-val_ratio = 0.25
+val_ratio = 0.2
 test_ratio = 0.05
 # 测试集|test_ratio|验证集|val_ratio|训练集
 # target_size = (360, 480)
