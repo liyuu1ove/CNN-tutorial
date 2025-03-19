@@ -1,4 +1,5 @@
 From compose dataset to deploy on UAVs
+
 # Train DNN model (take Yolov8 for an example)
 ## Setup CUDA environment (Nvidia GPU required,better if with 10GB+ video memory )
 * install CUDA
@@ -28,7 +29,7 @@ From compose dataset to deploy on UAVs
 * Create isolated conda envs
   ```shell
   $conda shell:
-  (base)conda create -n Yolov8 python=X.X
+  (base)conda create -n Yolov8 python=3.8
   ```
 * Activate environment
   ```shell
@@ -38,8 +39,9 @@ From compose dataset to deploy on UAVs
 * install [pytorch](https://pytorch.org/get-started/locally/)
   ```shell
   $conda shell:
-  (Yolov8) conda install pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 pytorch-cuda=12.1 -c pytorch -c nvidia 
   # select your vision on the website!
+  (Yolov8) conda install pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 pytorch-cuda=12.1 -c pytorch -c nvidia 
+  
 
 * PiP(change pytorch CUDA version in **requirements.txt** to your vision)
   ```shell
@@ -194,4 +196,4 @@ From compose dataset to deploy on UAVs
   pip install onnx-runtime
   python3 runtime.py
   ```
-This instruction is written by Fangyao Zhao at HUST,following the MIT li
+This instruction is written by Fangyao Zhao at HUST/Berkeley nicknamed as liyuu1ove on github,following the MIT license,please be careful when you spread it
