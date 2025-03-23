@@ -1,6 +1,6 @@
 From compose dataset to deploy on UAVs
 
-# Train DNN model (take Yolov8 for an example)
+# Train DNN model (take Yolo for an example)
 ## Setup CUDA environment (Nvidia GPU required,better if with 10GB+ video memory )
 * install CUDA
   ```bash
@@ -50,17 +50,17 @@ From compose dataset to deploy on UAVs
 ## Dependent installation
 * Create isolated conda envs
   ```shell
-  $conda shell:
+  $conda:
   (base)conda create -n Yolov8 python=3.8
   ```
 * Activate environment
   ```shell
-  $conda shell:
+  $conda:
   (base)conda activate Yolov8
   (Yolov8)
 * install [pytorch](https://pytorch.org/get-started/locally/)
   ```shell
-  $conda shell:
+  $conda:
   # select your vision on the website!
   (Yolov8) conda install pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 pytorch-cuda=12.1 -c pytorch -c nvidia 
   
@@ -69,7 +69,7 @@ From compose dataset to deploy on UAVs
 
   yolo core code is packed in ultralytics lib  
   ```shell
-  $conda shell
+  $conda
   (Yolov8) cd /path/to/Yolo 
   (Yolov8) pip install ultralytics
   ```
@@ -85,11 +85,12 @@ From compose dataset to deploy on UAVs
 ## Train
 ### Building datasets(standard yolo format)
 * Labelimg
-  download labelimg on [labelimg](https://github.com/HumanSignal/labelImg)
+
+  download on [labelimg](https://github.com/HumanSignal/labelImg)
 
  * **build labelimg** on windows
     ```shell
-    $conda shell
+    $conda
     (base)conda create -n Labelimg python=3.8
     (base)conda activate Labelimg
     (Labelimg)conda install pyqt=5
@@ -208,13 +209,13 @@ From compose dataset to deploy on UAVs
   ```
 * Perform training tasks in CLI
   ```shell
-  $conda shell
-  (Yolov8)path/to/ultralytics> yolo task=detect mode=train model=yolov8s.yaml pretrained= yolov8s.pt data=dataset.yaml epochs=300 batch=40
+  $conda
+  (Yolov8)path/to/ultralytics> yolo task=detect mode=train model=yolov8s.yaml pretrained= yolov8s.pt data=dataset.yaml epochs=300 batch=16
   ```
 * Perform training tasks using Python API
   ```bash
   $bash
-  python train.py#change parameters in train.py
+  python train.py #change parameters in train.py
   ```
 
   param:
@@ -227,17 +228,13 @@ From compose dataset to deploy on UAVs
 
   *batch* is the number of picture put in GPU at one time.Take in three kinds of parameter. Set as an integer (e.g., batch=16), auto mode for 60% GPU memory utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70).#best pratice -1 or 0.80
 ### Evaluation 
-* Calculate map evaluation
-  ```shell
-  
-  ```
 * test on test.txt
   ```shell
 
   ```
 * Predict
   ```shell
-  $conda shell
+  $conda
   python3 test.py --yaml configs/coco.yaml --weight weights/weight_AP05:0.253207_280-epoch.pth --img data/3.jpg
   ```
 # Deploy
