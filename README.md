@@ -79,11 +79,11 @@ From compose dataset to deploy on UAVs
   $git bash
   git clone https://github.com/ultralytics/ultralytics
   ```
-  all models are included in the repo,so just clone the newest one
+  all models are included in the repo,so just clone the newest one.
 
 
 ## Train
-### Building data sets(standard yolo format)
+### Building datasets(standard yolo format)
 * Labelimg
   download labelimg on [labelimg](https://github.com/HumanSignal/labelImg)
 
@@ -100,11 +100,13 @@ From compose dataset to deploy on UAVs
     (Labelimg)python labelImg.py [path/to/images] [path/to/prebuild/label.txt] #todo find save dir
     ```
 
-* The procedure to create train/val/test files is automated by using **generate_dataset.py** 
+* The procedure to create train/val/test files is automated by using **gen_data_yolo.py** 
   ```bash
   $bash:
-  python generate_dateset
+  python gen_data_yolo.py
   ```
+
+  The func will split data in ./dataset/data in proportion to ./dataset/test | train | val
 * The format of the data set is known as Darknet Yolo, Each image corresponds to a .txt label file. The label format is based on Yolo's data set label format: "category cx cy wh", where category is the category subscript, cx, cy are the coordinates of the center point of the normalized label box, and w, h are the normalized label box The width and height, .txt label file content example as follows:
   ```
   11 0.344192634561 0.611 0.416430594901 0.262
@@ -172,12 +174,16 @@ From compose dataset to deploy on UAVs
   │   ├── 000057.txt
   │   ├── 000070.jpg
   │   └── 000070.txt
-  └── val.txt                # val dataset path .txt file
+  └── val.txt 
+  ├── test                    # val dataset
+  │   ├── 000043.jpg
+  │   ├── 000043.txt   
+  └── test.txt             # val dataset path .txt file
 
   ```
   
 ### Build the training dataset.yaml configuration file
-* Reference ball.yaml
+* ball.yaml for reference
   ```
   path: ./dataset # dataset root dir
   train: train.txt # train images (relative to 'path')
@@ -203,16 +209,23 @@ From compose dataset to deploy on UAVs
 * Perform training tasks in CLI
   ```shell
   $conda shell
-  (Yolov8)path/to/ultralytics> yolo task=detect mode=train model=yolov8s.yaml pretrained= yolov8s.pt data=dataset.yaml epochs=300 batch=16
+  (Yolov8)path/to/ultralytics> yolo task=detect mode=train model=yolov8s.yaml pretrained= yolov8s.pt data=dataset.yaml epochs=300 batch=40
   ```
 * Perform training tasks using Python API
   ```bash
   $bash
   python train.py#change parameters in train.py
   ```
-  the parameter *model* will call yolov8n if you use the name yolov8n.yaml 
+
+  param:
+
+  *model* calls the model you want, it will call yolov8n if you use the name yolov8n.yaml 
   
-  using pretrained model to enhance the performance of your model, the pretrained model will be downloaded automatically when you call the model
+  *pretrained* uses pretrained model to enhance the performance of your model, the pretrained model will be downloaded automatically when you call the model
+
+  *epochs* is the total number of rounds you run. Refer to Internet for more info.
+
+  *batch* is the number of picture put in GPU at one time.Take in three kinds of parameter. Set as an integer (e.g., batch=16), auto mode for 60% GPU memory utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70).#best pratice -1 or 0.80
 ### Evaluation 
 * Calculate map evaluation
   ```shell

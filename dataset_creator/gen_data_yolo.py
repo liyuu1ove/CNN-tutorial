@@ -6,9 +6,10 @@ import time
 import cv2
 import numpy as np
 
-val_ratio = 0.2
-test_ratio = 0.05
-# 测试集|test_ratio|验证集|val_ratio|训练集
+val_ratio = 0.1
+test_ratio = 0.1
+#best pratice 8:1:1 but you can shrink 
+#the test ratio when data is reletively small
 # target_size = (360, 480)
 target_size = None
 
@@ -53,7 +54,7 @@ count = 0
 
 for img in imglist:
     count += 1
-    if (count <= int(val_ratio * len(imglist))): # 验证集和测试集
+    if (count <= int((val_ratio+test_ratio) * len(imglist))): # 验证集和测试集
         if (count <= int(test_ratio * len (imglist))):#测试集
             test_list.append(img)
             if target_size is None:

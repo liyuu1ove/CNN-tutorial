@@ -17,14 +17,14 @@ cap =cv2.VideoCapture(0)
 # change_cam_resolution(cap, 640, 480, 60)
 # set_manual_exporsure(cap, 350)
 
-set_cam_autowb(cap, True)
+#set_cam_autowb(cap, True)
 
 photo_dir = "./raw"
 if not os.path.exists(photo_dir):
     os.makedirs(photo_dir)
 
 # cv2.namedWindow("Detected Objects", cv2.WINDOW_NORMAL)
-photo_start_num = 0    #照片命名起点数字
+photo_start_num =  318   #照片命名起点数字
 photo_take_delay = 1    #拍照间隔 
 filehead = 'img-'       #照片名前后缀
 filetype = '.jpg' 
@@ -34,10 +34,12 @@ while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
         break
+    
     filename = filehead + str(photo_start_num) + filetype
     file_path = os.path.join(photo_dir, filename)
     cv2.imwrite(file_path,frame)
-    print(f"img saved!")
+    cv2.imshow('1',frame)
+    print(f"img saved!",photo_start_num)
     photo_start_num = photo_start_num + 1
     if photo_start_num == 1:
         break
