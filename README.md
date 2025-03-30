@@ -228,14 +228,14 @@ From compose dataset to deploy on UAVs
 
   *batch* is the number of picture put in GPU at one time.Take in three kinds of parameter. Set as an integer (e.g., batch=16), auto mode for 60% GPU memory utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70).#best pratice -1 or 0.80
 ### Evaluation 
-* test on test.txt
+* test on test to see model`s **Generalization ability**
   ```shell
-
+  yolo predict model=dir/to/your/best.pt(ex. ultralytics/runs/detect/train/weights/best.pt) source=dir/to/your/test_folders
   ```
-* Predict
+    result will save in ultralytics/runs/predict
+* val on val to fine-tune superparams
   ```shell
-  $conda
-  python3 test.py --yaml configs/coco.yaml --weight weights/weight_AP05:0.253207_280-epoch.pth --img data/3.jpg
+  yolo 
   ```
 # Deploy
 ## Export onnx
