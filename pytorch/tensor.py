@@ -19,3 +19,7 @@ rand_tensor = torch.rand(2,3)
 print(f"Shape of tensor: {rand_tensor.shape}")
 print(f"Datatype of tensor: {rand_tensor.dtype}")
 print(f"Device tensor is stored on: {rand_tensor.device}")
+
+print(f"Before: \n {rand_tensor} \n")
+rand_tensor.add_(1)
+print(f"Random Tensor: \n {rand_tensor} \n")

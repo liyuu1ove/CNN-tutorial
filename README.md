@@ -22,6 +22,9 @@ tensor.dtype
 tensor.device
 ```
 And manipulate it using:
+```python
+tensor.add_(1)
+```
 
 ## evaluation
 ### figures
@@ -143,7 +146,20 @@ In general
   ```
   all models are included in the repo,so just clone the newest one.
 
-
+* run enviornment
+  ```bash
+  $python
+  cd DNNmanual/yolo
+  python test_cuda.py
+  ```
+  ```
+  output:
+  2.4.1+cu124
+  True
+  1
+  90100
+  12.4
+  ```
 ## Train
 ### Building datasets(standard YOLO format)
 * Labelimg
