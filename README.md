@@ -1,6 +1,54 @@
-From compose dataset to deploy on UAVs
+*From the state of art to deploy your models in reality*
+# Learn machine learning basics
+Use [pytorch](https://pytorch.org/) python API to build a MNIST-recognize CNN.Pytorch can run on a local machine using CPU,so dont worry about the nVIDIA GPU requirement.
+```shell
+(conda)pip3 install torch torchvision torchaudio
+```
+## Basic ideas
+Lets begin by introducing some basic idea in CNN and proform them in pytorch.
+### tensor
+Tensor is the very basic data structure in machine learning.From a developer`s prespective,tensor is the nickname of high-dimension array in machine learning.For example,we introduce a 2D-array in C:
+```C
+int arr[m][n];
+```
+This is a tensor in 2 dimensions.In pytorch,we can declare a tensor using:(*see tensor.py*)
+```python
+tensor=torch.rand(shape)
+``` 
+And check its attributes using:
+```python
+tensor.shape
+tensor.dtype
+tensor.device
+```
+And manipulate it using:
 
-# Train DNN model (take Yolo for an example)
+## evaluation
+### figures
+In general
+#### P_curve
+![P_curve](./asset/P_curve.png)
+#### R_curve
+![R_curve](./asset/R_curve.png)
+#### PR_curve
+![PR_curve](./asset/PR_curve.png)
+#### F1_curve
+![F1_curve](./asset/F1_curve.png)
+### training results
+![results](./asset/results.png)
+<img src="./asset/F1_curve.png" width="500" height="200">
+#### mAP
+* `mAP50`
+* `mAP50-95`
+#### precision/recall
+* `precision`
+* `recall`
+#### box/cls/dfl loss
+* `box_loss`
+* `cls_loss`
+* `dfl_loss`
+
+# Train DNN model (take YOLO for an example)
 ## Setup CUDA environment (Nvidia GPU required,better if with 10GB+ video memory )
 * install CUDA
   ```bash
@@ -8,7 +56,22 @@ From compose dataset to deploy on UAVs
   $bash
   nvidia-smi
   ```
-  find required version on [NVIDIA CUDA](https://developer.nvidia.com/cuda-toolkit-archive)
+  ```
+  Thu Apr  3 16:29:48 2025
+  +-----------------------------------------------------------------------------------------+
+  | NVIDIA-SMI 555.97                 Driver Version: 555.97         CUDA Version: 12.5     |
+  |-----------------------------------------+------------------------+----------------------+
+  | GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+  | Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+  |                                         |                        |               MIG M. |
+  |=========================================+========================+======================|
+  |   0  NVIDIA GeForce RTX 4080 ...  WDDM  |   00000000:01:00.0 Off |                  N/A |
+  | N/A   33C    P3             15W /   55W |       0MiB /   16376MiB |      0%      Default |
+  |                                         |                        |                  N/A |
+  +-----------------------------------------+------------------------+----------------------+
+  ```
+
+  find required **CUDA Version** on [NVIDIA CUDA](https://developer.nvidia.com/cuda-toolkit-archive)
 * install cuDNN
 
   select cuDNN version base on CUDA version on [NVIDIA cuDNN](https://developer.nvidia.com/rdp/cudnn-archive)
@@ -51,27 +114,26 @@ From compose dataset to deploy on UAVs
 * Create isolated conda envs
   ```shell
   $conda:
-  (base)conda create -n Yolov8 python=3.8
+  (base)conda create -n YOLO python=3.8
   ```
 * Activate environment
   ```shell
   $conda:
-  (base)conda activate Yolov8
-  (Yolov8)
+  (base)conda activate YOLO
+  (YOLO)
 * install [pytorch](https://pytorch.org/get-started/locally/)
   ```shell
   $conda:
   # select your vision on the website!
-  (Yolov8) conda install pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 pytorch-cuda=12.1 -c pytorch -c nvidia 
+  (YOLO) conda install pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 pytorch-cuda=12.1 -c pytorch -c nvidia 
   
 
 * install ultralytics
 
-  yolo core code is packed in ultralytics lib  
+  YOLO core code is packed in ultralytics lib  
   ```shell
-  $conda
-  (Yolov8) cd /path/to/Yolo 
-  (Yolov8) pip install ultralytics
+  $conda 
+  (YOLO) pip install ultralytics
   ```
 
 * clone ultralytics git repo
@@ -83,7 +145,7 @@ From compose dataset to deploy on UAVs
 
 
 ## Train
-### Building datasets(standard yolo format)
+### Building datasets(standard YOLO format)
 * Labelimg
 
   download on [labelimg](https://github.com/HumanSignal/labelImg)
@@ -98,17 +160,18 @@ From compose dataset to deploy on UAVs
     (Labelimg)cd path/to/labelimg #change to you dir
     (Labelimg)pyrcc5 -o libs/resources.py resources.qrc
     (Labelimg)python labelImg.py  #run labelImg
-    (Labelimg)python labelImg.py [path/to/images] [path/to/prebuild/label.txt] #todo find save dir
+    (Labelimg)python labelImg.py -i [path/to/images/dir] -o [path/to/save/dir] -l [path/to/prebuild/label.txt]
+    Or (Labelimg)python labelImg.py -d [path/to/dataset/dir] -l [path/to/prebuild/label.txt]
     ```
 
 * The procedure to create train/val/test files is automated by using **gen_data_yolo.py** 
   ```bash
   $bash:
-  python gen_data_yolo.py
+  (YOLO)python gen_data_yolo.py
   ```
 
   The func will split data in ./dataset/data in proportion to ./dataset/test | train | val
-* The format of the data set is known as Darknet Yolo, Each image corresponds to a .txt label file. The label format is based on Yolo's data set label format: "category cx cy wh", where category is the category subscript, cx, cy are the coordinates of the center point of the normalized label box, and w, h are the normalized label box The width and height, .txt label file content example as follows:
+* The format of the data set is known as Darknet YOLO, Each image corresponds to a .txt label file. The label format is based on YOLO's data set label format: "category cx cy wh", where category is the category subscript, cx, cy are the coordinates of the center point of the normalized label box, and w, h are the normalized label box The width and height, .txt label file content example as follows:
   ```
   11 0.344192634561 0.611 0.416430594901 0.262
   14 0.509915014164 0.51 0.974504249292 0.972
@@ -135,15 +198,15 @@ From compose dataset to deploy on UAVs
   
   train.txt
   ```
-  C:/Desktop/Yolov8/dataset/train/000001.jpg
-  C:/Desktop/Yolov8/dataset/train/000002.jpg
-  C:/Desktop/Yolov8/dataset/train/000003.jpg
+  C:/Desktop/YOLO/dataset/train/000001.jpg
+  C:/Desktop/YOLO/dataset/train/000002.jpg
+  C:/Desktop/YOLO/dataset/train/000003.jpg
   ```
   val.txt
   ```
-  C:/Desktop/Yolov8/dataset/val/000070.jpg
-  C:/Desktop/Yolov8/dataset/val/000043.jpg
-  C:/Desktop/Yolov8/dataset/val/000057.jpg
+  C:/Desktop/YOLO/dataset/val/000070.jpg
+  C:/Desktop/YOLO/dataset/val/000043.jpg
+  C:/Desktop/YOLO/dataset/val/000057.jpg
   ```
 * Generate the .names category label file, the sample content is as follows:
  
@@ -200,7 +263,7 @@ From compose dataset to deploy on UAVs
     4: airplane
   ```
 ### Train
-* modify yolov8.yaml in ultralytics git repo at *ultralytics\ultralytics\cfg\models\v8*
+* modify yolo.yaml in ultralytics git repo at *ultralytics\ultralytics\cfg\models*
   ```
   ...
   nc:6 #change the number to match your dataset.yaml
@@ -208,10 +271,22 @@ From compose dataset to deploy on UAVs
   #no other change needed
   ```
 * Perform training tasks in CLI
-  ```shell
+  ```conda
   $conda
-  (Yolov8)path/to/ultralytics> yolo task=detect mode=train model=yolov8s.yaml pretrained= yolov8s.pt data=dataset.yaml epochs=300 batch=16
-  ```
+  (YOLO)path/to/ultralytics> 
+ * Build a new model from YAML and start training from scratch
+    ```shell
+    $conda
+    (YOLO)path/to/ultralytics>yolo detect train data=coco8.yaml model=yolo11n.yaml epochs=100 batch=16
+    ```
+ * Start training from a pretrained *.pt model
+    ```shell
+    yolo detect train data=coco8.yaml model=yolo11n.pt epochs=100
+    ```
+ * Build a new model from YAML, transfer pretrained weights to it and start training
+    ```shell
+    yolo detect train data=coco8.yaml model=yolo11n.yaml pretrained=yolo11n.pt epochs=100 batch=16
+    ```
 * Perform training tasks using Python API
   ```bash
   $bash
@@ -220,27 +295,34 @@ From compose dataset to deploy on UAVs
 
   param:
 
-  *model* calls the model you want, it will call yolov8n if you use the name yolov8n.yaml 
+  *model* calls the model you want, it will call yolon if you use the name yolon.yaml 
   
-  *pretrained* uses pretrained model to enhance the performance of your model, the pretrained model will be downloaded automatically when you call the model
+  *pretrained* uses pretrained model to enhance the performance of your model, the pretrained model will be downloaded automatically when you use the pretrained parameter
 
   *epochs* is the total number of rounds you run. Refer to Internet for more info.
 
   *batch* is the number of picture put in GPU at one time.Take in three kinds of parameter. Set as an integer (e.g., batch=16), auto mode for 60% GPU memory utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70).#best pratice -1 or 0.80
-### Evaluation 
+## Evaluation 
 * test on test to see model`s **Generalization ability**
   ```shell
-  yolo predict model=dir/to/your/best.pt(ex. ultralytics/runs/detect/train/weights/best.pt) source=dir/to/your/test_folders
+  conda$
+  (YOLO)path/to/ultralytics>yolo predict model=dir/to/your/best.pt(ex. runs/detect/train/weights/best.pt) source=dir/to/your/test_folders
   ```
     result will save in ultralytics/runs/predict
-* val on val to fine-tune superparams
+* val on val to fine-tune superparameters
   ```shell
-  yolo 
+  conda$
+  (YOLO)path/to/ultralytics>yolo val model=dir/to/your/best.pt(ex. runs/detect/train/weights/best.pt) data=dir/to/your/data.yaml
   ```
+    result will save in ultralytics/runs/val
+    
+    you can see the graph to evaluate training superparams
 # Deploy
 ## Export onnx
 * 
+  ```conda
+  (YOLO)path/to/ultralytics>yolo export model=path/to/best.pt format=onnx
   ```
-  ```
+  onnx is a
 
 *This instruction is written by Fangyao Zhao at HUST/Berkeley nicknamed as liyuu1ove on github,following the MIT license,please be careful when you spread it*

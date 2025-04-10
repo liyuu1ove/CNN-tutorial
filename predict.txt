@@ -1,2 +1,0 @@
-yolo predict model=C:\Users\86183\Desktop\ultralytics\runs\detect\train3\weights\best source=C:\Users\86183\Desktop\DNNmanual\dataset_creator\dataset\test
-yolo export model=runs/detect/train11/weights/best.pt format=onnx
