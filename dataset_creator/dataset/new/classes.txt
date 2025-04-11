@@ -1,8 +1,0 @@
-red
-blue
-yellow
-black
-red_safezone
-blue_safezone
-black2
-green
