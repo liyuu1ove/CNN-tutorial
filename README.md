@@ -11,7 +11,7 @@ Tensor is the very basic data structure in machine learning.From a developer`s p
 ```C
 int arr[m][n];
 ```
-This is a tensor in 2 dimensions.In pytorch,we can declare a tensor using:(*see tensor.py*)
+This is a tensor in 2 dimensions.In CNN,it can present a 2D black-white image or a channel of an RGB picture.In pytorch,we can declare a tensor using:(*see tensor.py*)
 ```python
 tensor=torch.rand(shape)
 ``` 
@@ -24,10 +24,17 @@ tensor.device
 And manipulate it using:
 ```python
 tensor.add_(1)
+tensor.matmul(tensor_a,tensor_b)
 ```
+### CNN
+Convolutional Neural Network (CNN) is an advanced version of artificial neural networks,primarily designed to extract features from grid-like matrix datasets. This is particularly useful for visual datasets such as images or videos, where data patterns play a crucial role.
 
 ## evaluation
-### figures
+### model attributes
+#### FLOPS
+#### parameters
+
+### train parameters
 In general
 #### P_curve
 ![P_curve](./asset/P_curve.png)
@@ -69,7 +76,7 @@ In general
   |                                         |                        |               MIG M. |
   |=========================================+========================+======================|
   |   0  NVIDIA GeForce RTX 4080 ...  WDDM  |   00000000:01:00.0 Off |                  N/A |
-  | N/A   33C    P3             15W /   55W |       0MiB /   16376MiB |      0%      Default |
+  | N/A   33C    P3             15W /   55W |      0MiB /   16376MiB |      0%      Default |
   |                                         |                        |                  N/A |
   +-----------------------------------------+------------------------+----------------------+
   ```
@@ -159,6 +166,10 @@ In general
   1
   90100
   12.4
+
+  0: 384x640 2 persons, 1 tie, 41.6ms
+  Speed: 1.3ms preprocess, 41.6ms inference, 70.5ms postprocess per image at shape (1, 3, 384, 640)
+  #And an image will show
   ```
 ## Train
 ### Building datasets(standard YOLO format)
