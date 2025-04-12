@@ -4,15 +4,24 @@ Use [pytorch](https://pytorch.org/) python API to build a MNIST-recognize CNN.Py
 ```shell
 (conda)pip3 install torch torchvision torchaudio
 ```
+If you have some trouble
 ## Basic ideas
-Lets begin by introducing some basic idea in CNN and proform them in pytorch.
-### tensor
-Tensor is the very basic data structure in machine learning.From a developer`s prespective,tensor is the nickname of high-dimension array in machine learning.For example,we introduce a 2D-array in C:
+Lets begin by introducing some basic idea in CNN and perform them in pytorch.
+### Tensor
+Tensor is the very basic data structure in machine learning.From a developer`s prespective,tensor is the nickname of high-dimension array in machine learning.For example,we declare a 2D-array in C:
 ```C
 int arr[m][n];
 ```
-This is a tensor in 2 dimensions.In CNN,it can present a 2D black-white image or a channel of an RGB picture.In pytorch,we can declare a tensor using:(*see tensor.py*)
+This is a tensor in 2 dimensions.In CNN,it can present a 2D black-white image or a channel of an RGB picture.
+
+Also we can declare a 1D-array aka *vector* in C:
+```C
+int arr[m];
+```
+
+In pytorch,we can declare a tensor using:(*see tensor.py*)
 ```python
+shape = (2,3)
 tensor=torch.rand(shape)
 ``` 
 And check its attributes using:
@@ -24,16 +33,44 @@ tensor.device
 And manipulate it using:
 ```python
 tensor.add_(1)
-tensor.matmul(tensor_a,tensor_b)
+#more linear algebra methods will be introduced in the following section
 ```
-### CNN
-Convolutional Neural Network (CNN) is an advanced version of artificial neural networks,primarily designed to extract features from grid-like matrix datasets. This is particularly useful for visual datasets such as images or videos, where data patterns play a crucial role.
+methods with _ indicate that they store the result in their **original** memory,which is sometimes dangerous.
+### Linear Algebra Basics 
+#### matrix mutiply
+![matmul](asset\Neural_net_layers_as_matrices_and_vectors.png)*from https://khalidsaifullaah.github.io/neural-networks-from-linear-algebraic-perspective*
+```python
+torch.matmul(tensor_a,tensor_b)
+```
+#### transpose
+```python
+tensor_a.T
+```
 
+## CNN
+Convolutional Neural Network (CNN) is an advanced version of artificial neural networks,primarily designed to extract features from grid-like matrix datasets. This is particularly useful for visual datasets such as images or videos, where data patterns play a crucial role.
+### structure
+![structure](asset\structure.jpeg)
+*from https://www.geeksforgeeks.org/apply-a-2d-max-pooling-in-pytorch/*
+### convolution
+![convolution](asset\convolution.gif)
+*from https://www.geeksforgeeks.org/apply-a-2d-max-pooling-in-pytorch/*
+
+Also see `convolution.py`
+### pooling
+![maxpooling](asset\maxpooling.png)
+*from https://www.geeksforgeeks.org/apply-a-2d-max-pooling-in-pytorch/*
+
+Also see `maxpooling.py`
+###
+## build a CNN
 ## evaluation
 ### model attributes
-#### FLOPS
-#### parameters
+#### FLOPs/MACs
+FLOPs (Floating Point Operations) and MACs (Multiply-Accumulate Operations) are metrics that are commonly used to calculate the computational complexity of deep learning models.Generally,the bigger the number is ,the higher computing ability the model requires.
 
+#### params
+Parameters in CNNs are primarily the weights and biases learned during training.Generally,the bigger the number is ,the more VRAM the model requires.
 ### train parameters
 In general
 #### P_curve
@@ -351,5 +388,13 @@ In general
   (YOLO)path/to/ultralytics>yolo export model=path/to/best.pt format=onnx
   ```
   onnx is a
+
+# Recommend reading
+* 机器学习 周志华 清华大学出版社
+* Deep learning by Ian Goodfellow, Yoshua Bengio ,Aaron Courville Copyright MIT
+# acknowledge and reference
+* Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+* https://www.runoob.com/pytorch
+* https://pytorch.org/
 
 *This instruction is written by Fangyao Zhao at HUST/Berkeley nicknamed as liyuu1ove on github,following the MIT license,please be careful when you spread it*
