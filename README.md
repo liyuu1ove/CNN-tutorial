@@ -1,11 +1,11 @@
 *From the state of art to deploy your models in reality*
 # Learn machine learning basics
-* Download and setup conda on [conda](https://anaconda.org/anaconda/conda) or [TsinghuaTuna](https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/?C=M&O=D)
+Download and setup conda on [conda](https://anaconda.org/anaconda/conda) or [TsinghuaTuna](https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/?C=M&O=D)
 ```shell
 $conda
 (base)conda create -n pytorch_cpu python=3.9
 ```
-* Use [pytorch](https://pytorch.org/) python API to build a MNIST-recognize CNN.Pytorch can run on a local machine using CPU,so dont worry about the NVIDIA GPU requirement.
+Use [pytorch](https://pytorch.org/) python API to build a MNIST-recognize CNN.Pytorch can run on a local machine using CPU,so dont worry about the NVIDIA GPU requirement.
 
 ```shell
 $conda
