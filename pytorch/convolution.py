@@ -29,7 +29,8 @@ conv.bias = nn.Parameter(bias)
 # Apply the convolution operation 
 output = conv(image) 
 
-# Print the output 
+# Print
+print("input image : ",image)
 print('Output Shape :',output.shape) 
 print('convolution \n',output)
 

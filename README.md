@@ -71,25 +71,38 @@ FLOPs (Floating Point Operations) and MACs (Multiply-Accumulate Operations) are 
 
 #### params
 Parameters in CNNs are primarily the weights and biases learned during training.Generally,the bigger the number is ,the more VRAM the model requires.
-### train parameters
-In general
+### performance metrics
+More explanation and real cases in [yolo-performance-metrics](https://docs.ultralytics.com/guides/yolo-performance-metrics/)
+#### confusion matrix
+![confusion matrix](asset\confusion_matrix.png)
+The confusion matrix provides a detailed view of the outcomes, showcasing the counts of true positives, true negatives, false positives, and false negatives for each class.
+#### precision/recall
+* `Precision` 
+quantifies the proportion of true positives among all positive predictions, assessing the model's capability to avoid false positives. 
+* `Recall`
+calculates the proportion of true positives among all actual positives, measuring the model's ability to detect all instances of a class.
+#### confidence
+The threshold of output a lable.Generally,the higher the confidence,the higher the precision,the lower the recall,verse visa.
+#### IoU
+Intersection over Union is a measure that quantifies the overlap between a predicted bounding box and a ground truth bounding box. It plays a fundamental role in evaluating the accuracy of object localization.
 #### P_curve
 ![P_curve](./asset/P_curve.png)
+The precision_confidence curve is a graphical representation of precision values at different thresholds.This curve helps in understanding how precision varies as the threshold changes.
 #### R_curve
 ![R_curve](./asset/R_curve.png)
+Correspondingly, this graph illustrates how the recall values change across different thresholds.
 #### PR_curve
 ![PR_curve](./asset/PR_curve.png)
 #### F1_curve
 ![F1_curve](./asset/F1_curve.png)
+The F1 Score is the harmonic mean of precision and recall, providing a balanced assessment of a model's performance while considering both false positives and false negatives.
 ### training results
 ![results](./asset/results.png)
-<img src="./asset/F1_curve.png" width="500" height="200">
-#### mAP
-* `mAP50`
-* `mAP50-95`
-#### precision/recall
-* `precision`
-* `recall`
+#### AP
+* `AP`computes the area under the precision-recall curve, providing a single value that encapsulates the model's precision and recall performance.
+* `mAP50` Mean average precision 50 calculated at an intersection over union (IoU) threshold of 0.50. It's a measure of the model's accuracy considering only the "easy" detections.
+* `mAP50-95`The average of the mean average precision calculated at varying IoU thresholds, ranging from 0.50 to 0.95. It gives a comprehensive view of the model's performance across different levels of detection difficulty.
+
 #### box/cls/dfl loss
 * `box_loss`
 * `cls_loss`

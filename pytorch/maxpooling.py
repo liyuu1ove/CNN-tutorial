@@ -19,6 +19,7 @@ pool = nn.MaxPool2d(kernel_size=2, stride=2)
 # Apply the Max-pooling layer to the input tensor 
 output = pool(input_tensor) 
 
-# Print the output tensor 
+# Print
+print(f"input image:",input_tensor)
 print(f'Output Shape :',output.shape) 
 print(f'maxpooling\n',output)
