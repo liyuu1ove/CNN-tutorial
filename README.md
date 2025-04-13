@@ -1,10 +1,17 @@
 *From the state of art to deploy your models in reality*
 # Learn machine learning basics
-Use [pytorch](https://pytorch.org/) python API to build a MNIST-recognize CNN.Pytorch can run on a local machine using CPU,so dont worry about the nVIDIA GPU requirement.
+* Download and setup conda on [conda](https://anaconda.org/anaconda/conda) or [TsinghuaTuna](https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/?C=M&O=D)
 ```shell
-(conda)pip3 install torch torchvision torchaudio
+conda create -n pytorch_cpu python=3.9
 ```
-If you have some trouble
+* Use [pytorch](https://pytorch.org/) python API to build a MNIST-recognize CNN.Pytorch can run on a local machine using CPU,so dont worry about the NVIDIA GPU requirement.
+
+```shell
+$conda
+(base)conda activate pytorch_cpu
+(pytorch_cpu)pip3 install torch torchvision torchaudio
+```
+If you have some trouble in setuping environments ,you can use [google colab](https://colab.research.google.com/github/pytorch/tutorials/blob/gh-pages/_downloads/0e6615c5a7bc71e01ff3c51217ea00da/tensorqs_tutorial.ipynb#scrollTo=Pzb1CuJSbIVT)
 ## Basic ideas
 Lets begin by introducing some basic idea in CNN and perform them in pytorch.
 ### Tensor
@@ -66,6 +73,7 @@ Also see `maxpooling.py`
 ## build a CNN
 ## evaluation
 ### model attributes
+![params and FLOPs](asset\yolov8-comparison-plots.avif)
 #### FLOPs/MACs
 FLOPs (Floating Point Operations) and MACs (Multiply-Accumulate Operations) are metrics that are commonly used to calculate the computational complexity of deep learning models.Generally,the bigger the number is ,the higher computing ability the model requires.
 
@@ -93,6 +101,7 @@ The precision_confidence curve is a graphical representation of precision values
 Correspondingly, this graph illustrates how the recall values change across different thresholds.
 #### PR_curve
 ![PR_curve](./asset/PR_curve.png)
+An integral visualization for any classification problem, this curve showcases the trade-offs between precision and recall at varied thresholds. It becomes especially significant when dealing with imbalanced classes.
 #### F1_curve
 ![F1_curve](./asset/F1_curve.png)
 The F1 Score is the harmonic mean of precision and recall, providing a balanced assessment of a model's performance while considering both false positives and false negatives.
