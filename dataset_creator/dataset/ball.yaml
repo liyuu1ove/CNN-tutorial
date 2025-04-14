@@ -7,10 +7,10 @@
 #     └── datasets
 #     └── example.yaml
 
-path: C:\Users\86183\Desktop\DNNmanual\dataset_creator\dataset # dataset root dir
+path: C:\Users\86183\Desktop\CNN-tutorial\dataset_creator\dataset # dataset root dir
 train: train.txt # train images (relative to 'path')
 val: val.txt # val images (relative to 'path')
-test: test.txt
+test: test.txt # test images (relative to 'path')
 
 
 # Classes

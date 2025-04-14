@@ -10,7 +10,7 @@
 path: ./dataset # dataset root dir
 train: train.txt # train images (relative to 'path')
 val: val.txt # val images (relative to 'path')
-test: test.txt 
+test: test.txt # test images (relative to 'path')
 
 # Classes
 names:
