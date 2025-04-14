@@ -54,10 +54,10 @@ torch.matmul(tensor_a,tensor_b)
 ```python
 tensor_a.T
 ```
-
+#### 
 ## CNN
 Convolutional Neural Network (CNN) is an advanced version of artificial neural networks,primarily designed to extract features from grid-like matrix datasets. This is particularly useful for visual datasets such as images or videos, where data patterns play a crucial role.
-### structure
+### CNN structure
 ![structure](asset\structure.jpeg)
 *from https://www.geeksforgeeks.org/apply-a-2d-max-pooling-in-pytorch/*
 ### convolution
@@ -70,11 +70,14 @@ Also see `convolution.py`
 *from https://www.geeksforgeeks.org/apply-a-2d-max-pooling-in-pytorch/*
 
 Also see `maxpooling.py`
-###
+### Activation Function
+### Loss Function
+### Optimizer
 ## build a CNN
 ## evaluation
 ### model attributes
 ![params and FLOPs](asset\yolov8-comparison-plots.avif)
+*from https://docs.ultralytics.com*
 #### FLOPs/MACs
 FLOPs (Floating Point Operations) and MACs (Multiply-Accumulate Operations) are metrics that are commonly used to calculate the computational complexity of deep learning models.Generally,the bigger the number is ,the higher computing ability the model requires.
 
@@ -82,6 +85,8 @@ FLOPs (Floating Point Operations) and MACs (Multiply-Accumulate Operations) are 
 Parameters in CNNs are primarily the weights and biases learned during training.Generally,the bigger the number is ,the more VRAM the model requires.
 ### performance metrics
 More explanation and real cases in [yolo-performance-metrics](https://docs.ultralytics.com/guides/yolo-performance-metrics/)
+
+
 #### confusion matrix
 ![confusion matrix](asset\confusion_matrix.png)
 The confusion matrix provides a detailed view of the outcomes, showcasing the counts of true positives, true negatives, false positives, and false negatives for each class.
@@ -114,9 +119,11 @@ The F1 Score is the harmonic mean of precision and recall, providing a balanced 
 * `mAP50-95`The average of the mean average precision calculated at varying IoU thresholds, ranging from 0.50 to 0.95. It gives a comprehensive view of the model's performance across different levels of detection difficulty.
 
 #### box/cls/dfl loss
-* `box_loss`
-* `cls_loss`
-* `dfl_loss`
+for more reference [yolo_loss](https://docs.ultralytics.com/reference/utils/loss/)
+* `box_loss`Box loss is a criterion class for computing training losses for bounding boxes,composed by IoU Loss and DFL Loss (Distribution Focal Loss)
+* `cls_loss`Classification loss measures how well the model classifies or identifies objects correctly. The cls_loss is scaled with pixels and helps determine the accuracy of the model's object classification capabilities.
+* `dfl_loss`Distribution Focal Loss is a criterion class for computing distribution focal loss,helping improve the model's ability to precisely locate objects in images by predicting probability distributions rather than direct coordinates.
+During the train process, you are expected to see the loss dropping in a fluctuating manner.It is common.
 
 # Train DNN model (take YOLO for an example)
 ## Setup CUDA environment (Nvidia GPU required,better if with 10GB+ video memory )

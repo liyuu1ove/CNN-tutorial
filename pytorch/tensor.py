@@ -19,10 +19,12 @@ rand_tensor = torch.rand(2,3)
 print(f"Shape of tensor: {rand_tensor.shape}")
 print(f"Datatype of tensor: {rand_tensor.dtype}")
 print(f"Device tensor is stored on: {rand_tensor.device}")
-
+# add
 print(f"Before add: \n {rand_tensor} \n")
 rand_tensor.add_(1)
 print(f"After add: \n {rand_tensor} \n")
-
+#transpose and matmul
+print(f"After add: \n {rand_tensor.T} \n")
 sum_tensor = torch.matmul(rand_tensor,rand_tensor.T)
 print(f"After matmul: \n {sum_tensor} \n")
+#
