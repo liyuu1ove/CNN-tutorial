@@ -123,6 +123,7 @@ for more reference [yolo_loss](https://docs.ultralytics.com/reference/utils/loss
 * `box_loss`Box loss is a criterion class for computing training losses for bounding boxes,composed by IoU Loss and DFL Loss (Distribution Focal Loss)
 * `cls_loss`Classification loss measures how well the model classifies or identifies objects correctly. The cls_loss is scaled with pixels and helps determine the accuracy of the model's object classification capabilities.
 * `dfl_loss`Distribution Focal Loss is a criterion class for computing distribution focal loss,helping improve the model's ability to precisely locate objects in images by predicting probability distributions rather than direct coordinates.
+
 During the train process, you are expected to see the loss dropping in a fluctuating manner.It is common.
 
 # Train DNN model (take YOLO for an example)
@@ -397,7 +398,7 @@ During the train process, you are expected to see the loss dropping in a fluctua
 
   *batch* is the number of picture put in GPU at one time.Take in three kinds of parameter. Set as an integer (e.g., batch=16), auto mode for 60% GPU memory utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70).#best pratice -1 or 0.80
 ## Evaluation 
-* test on test to see model`s **Generalization ability**
+* test on test/ to see model`s **Generalization ability**
   ```shell
   conda$
   (YOLO)path/to/ultralytics>yolo predict model=dir/to/your/best.pt(ex. runs/detect/train/weights/best.pt) source=dir/to/your/test_folders
@@ -412,12 +413,24 @@ During the train process, you are expected to see the loss dropping in a fluctua
     
     you can see the graph to evaluate training superparams
 # Deploy
-## Export onnx
-* 
+## Interact with onnx
+### export onnx format model
   ```conda
   (YOLO)path/to/ultralytics>yolo export model=path/to/best.pt format=onnx
   ```
-  onnx is a
+* [ONNX(Open Neural Network Exchange)](https://onnx.ai/) is an open format built to represent machine learning models. ONNX defines a common set of operators - the building blocks of machine learning and deep learning models - and a common file format to enable AI developers to use models with a variety of frameworks, tools, runtimes, and compilers.
+### [Onnx runtime](https://onnxruntime.ai/)
+Onnx runtime is a production-grade AI engine.It supports inference acceleration on various devices such as CPU GPU NPU,etc.
+## More runtimes
+### [TensorRT](https://developer.nvidia.com/tensorrt) for CUDA device
+![tensorRT](asset\how-tensor-rt-works.jpg)
+If your device are equipped with CUDA cores,it is your best choice.
+### [NCNN](https://github.com/Tencent/ncnn) for mobile device
+ncnn is a high-performance neural network inference computing framework optimized for **mobile platforms**.Developed by tencent. 
+### [RKNN](https://github.com/rockchip-linux/rknn-toolkit) for rk series CPU
+Rockchip is a Chinese fabless semiconductor company,like Hisilicon,Qualcomm,etc.
+Their NPU is suffixed with rk,like rk3588s on [orangepi5 pro](http://www.orangepi.cn/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-5.html) with 6TOPs computation ability.
+[rknn model zoo](https://github.com/airockchip/rknn_model_zoo/blob/main/README_CN.md)
 
 # Recommend reading
 * 机器学习 周志华 清华大学出版社
