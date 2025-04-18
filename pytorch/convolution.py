@@ -33,5 +33,3 @@ output = conv(image)
 print("input image : ",image)
 print('Output Shape :',output.shape) 
 print('convolution \n',output)
-
-

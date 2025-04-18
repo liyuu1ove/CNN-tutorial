@@ -1,22 +1,24 @@
 *From the state of art to deploy your models in reality*
+
+[简体中文](README_zh.md)
 # Learn machine learning basics
 Download and setup conda on [conda](https://anaconda.org/anaconda/conda) or [TsinghuaTuna](https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/?C=M&O=D)
 ```shell
 $conda
 (base)conda create -n pytorch_cpu python=3.9
 ```
-Use [pytorch](https://pytorch.org/) python API to build a MNIST-recognize CNN.Pytorch can run on a local machine using CPU,so dont worry about the NVIDIA GPU requirement.
+Use [pytorch](https://pytorch.org/) python API to build a MNIST-recognize CNN. Pytorch can run on a local machine using CPU, so don't worry about the NVIDIA GPU requirement.
 
 ```shell
 $conda
 (base)conda activate pytorch_cpu
 (pytorch_cpu)pip3 install torch torchvision torchaudio
 ```
-If you have some trouble in setuping environments ,you can use [google colab](https://colab.research.google.com/github/pytorch/tutorials/blob/gh-pages/_downloads/0e6615c5a7bc71e01ff3c51217ea00da/tensorqs_tutorial.ipynb#scrollTo=Pzb1CuJSbIVT)
+If you have some trouble in setting up environment, you can use [google colab](https://colab.research.google.com/github/pytorch/tutorials/blob/gh-pages/_downloads/0e6615c5a7bc71e01ff3c51217ea00da/tensorqs_tutorial.ipynb#scrollTo=Pzb1CuJSbIVT)
 ## Basic ideas
-Lets begin by introducing some basic idea in CNN and perform them in pytorch.
+Lets begin by introducing some basic ideas in CNN and perform them in pytorch.
 ### Tensor
-Tensor is the very basic data structure in machine learning.From a developer`s prespective,tensor is the nickname of high-dimension array in machine learning.For example,we declare a 2D-array in C:
+Tensor is the very basic data structure in machine learning. From a developer's prespective, tensor is the nickname of high-dimension array in machine learning. For example, we declare a 2D-array in C:
 ```C
 int arr[m][n];
 ```
@@ -43,7 +45,7 @@ And manipulate it using:
 tensor.add_(1)
 #more linear algebra methods will be introduced in the following section
 ```
-methods with _ indicate that they store the result in their **original** memory,which is sometimes dangerous.
+methods with "_" indicate that they store the result in their **original** memory,which is sometimes dangerous.
 ### Linear Algebra Basics 
 #### matrix mutiply
 ![matmul](asset\Neural_net_layers_as_matrices_and_vectors.png)*from https://khalidsaifullaah.github.io/neural-networks-from-linear-algebraic-perspective*
@@ -54,26 +56,30 @@ torch.matmul(tensor_a,tensor_b)
 ```python
 tensor_a.T
 ```
-#### 
+####
+### Neuron
 ## CNN
 Convolutional Neural Network (CNN) is an advanced version of artificial neural networks,primarily designed to extract features from grid-like matrix datasets. This is particularly useful for visual datasets such as images or videos, where data patterns play a crucial role.
 ### CNN structure
 ![structure](asset\structure.jpeg)
 *from https://www.geeksforgeeks.org/apply-a-2d-max-pooling-in-pytorch/*
+
+[Yolov8 structure](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/models/v8/yoloe-v8.yaml)
+
 ### convolution
 ![convolution](asset\convolution.gif)
 *from https://www.geeksforgeeks.org/apply-a-2d-max-pooling-in-pytorch/*
 
-Also see `convolution.py`
+Convolution operations extract localized features (like edges, textures).
+Also see `convolution.py` `convolution_maodie.py`
 ### pooling
 ![maxpooling](asset\maxpooling.png)
 *from https://www.geeksforgeeks.org/apply-a-2d-max-pooling-in-pytorch/*
-
+Pooling (downsampling) reduces spatial dimensions to compress features and control overfitting.
 Also see `maxpooling.py`
 ### Activation Function
 ### Loss Function
-### Optimizer
-## build a CNN
+### Back propagation Optimizer
 ## evaluation
 ### model attributes
 ![params and FLOPs](asset\yolov8-comparison-plots.avif)
@@ -125,7 +131,7 @@ for more reference [yolo_loss](https://docs.ultralytics.com/reference/utils/loss
 * `dfl_loss`Distribution Focal Loss is a criterion class for computing distribution focal loss,helping improve the model's ability to precisely locate objects in images by predicting probability distributions rather than direct coordinates.
 
 During the train process, you are expected to see the loss dropping in a fluctuating manner.It is common.
-
+# Build a MNIST CNN
 # Train DNN model (take YOLO for an example)
 ## Setup CUDA environment (Nvidia GPU required,better if with 10GB+ video memory )
 * install CUDA

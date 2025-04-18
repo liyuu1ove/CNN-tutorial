@@ -2,3 +2,4 @@
 *.txt
 dataset_creator/dataset/train.cache
 dataset_creator/dataset/val.cache
+/data
