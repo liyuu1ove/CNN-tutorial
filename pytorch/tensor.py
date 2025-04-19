@@ -27,4 +27,3 @@ print(f"After add: \n {rand_tensor} \n")
 print(f"After add: \n {rand_tensor.T} \n")
 sum_tensor = torch.matmul(rand_tensor,rand_tensor.T)
 print(f"After matmul: \n {sum_tensor} \n")
-#

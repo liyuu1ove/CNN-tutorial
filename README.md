@@ -56,8 +56,31 @@ torch.matmul(tensor_a,tensor_b)
 ```python
 tensor_a.T
 ```
-####
-### Neuron
+
+## Neutral Network
+### Neuron model
+![neuron](asset\neuron.jpg)
+*from https://www.geeksforgeeks.org/neural-networks-a-beginners-guide/*
+
+The basic units that receive inputs, each neuron is governed by a threshold and an **activation function**.
+### Activation Function
+An ideal activation function is a step function. But it is never used in practice because it is unsmooth and discontinuous. Sigmoid and ReLU(Rectified linear unit) are more common.
+
+![Sigmoid](asset\Activation_logistic.svg.png)
+![ReLU](asset\Activation_rectified_linear.svg.png)
+
+*from https://en.wikipedia.org/wiki/Activation_function*
+
+The activation function introduce no-linearity to neural network, which really matters. Try to think why. 
+
+Hint! Reflect on matmal.
+### Layers in multi-layer feedforward neural network
+![multi-layer feedforward neural network](asset\nn-structure.jpg)
+
+### Loss Function
+
+### Back propagation and Optimizer
+
 ## CNN
 Convolutional Neural Network (CNN) is an advanced version of artificial neural networks,primarily designed to extract features from grid-like matrix datasets. This is particularly useful for visual datasets such as images or videos, where data patterns play a crucial role.
 ### CNN structure
@@ -75,63 +98,68 @@ Also see `convolution.py` `convolution_maodie.py`
 ### pooling
 ![maxpooling](asset\maxpooling.png)
 *from https://www.geeksforgeeks.org/apply-a-2d-max-pooling-in-pytorch/*
+
 Pooling (downsampling) reduces spatial dimensions to compress features and control overfitting.
 Also see `maxpooling.py`
-### Activation Function
-### Loss Function
-### Back propagation Optimizer
-## evaluation
-### model attributes
+
+# Build a CNN for MNIST
+## Prepare a dataset
+## Define a CNN
+## Choose a loss func and optimizer
+## train
+## test
+# Learn how to evaluation a model
+## attributes
 ![params and FLOPs](asset\yolov8-comparison-plots.avif)
 *from https://docs.ultralytics.com*
-#### FLOPs/MACs
+### FLOPs/MACs
 FLOPs (Floating Point Operations) and MACs (Multiply-Accumulate Operations) are metrics that are commonly used to calculate the computational complexity of deep learning models.Generally,the bigger the number is ,the higher computing ability the model requires.
 
-#### params
+### params
 Parameters in CNNs are primarily the weights and biases learned during training.Generally,the bigger the number is ,the more VRAM the model requires.
-### performance metrics
+## performance metrics
 More explanation and real cases in [yolo-performance-metrics](https://docs.ultralytics.com/guides/yolo-performance-metrics/)
 
 
-#### confusion matrix
+### confusion matrix
 ![confusion matrix](asset\confusion_matrix.png)
 The confusion matrix provides a detailed view of the outcomes, showcasing the counts of true positives, true negatives, false positives, and false negatives for each class.
-#### precision/recall
+### precision/recall
 * `Precision` 
 quantifies the proportion of true positives among all positive predictions, assessing the model's capability to avoid false positives. 
 * `Recall`
 calculates the proportion of true positives among all actual positives, measuring the model's ability to detect all instances of a class.
-#### confidence
+### confidence
 The threshold of output a lable.Generally,the higher the confidence,the higher the precision,the lower the recall,verse visa.
-#### IoU
+### IoU
 Intersection over Union is a measure that quantifies the overlap between a predicted bounding box and a ground truth bounding box. It plays a fundamental role in evaluating the accuracy of object localization.
-#### P_curve
+### P_curve
 ![P_curve](./asset/P_curve.png)
 The precision_confidence curve is a graphical representation of precision values at different thresholds.This curve helps in understanding how precision varies as the threshold changes.
-#### R_curve
+### R_curve
 ![R_curve](./asset/R_curve.png)
 Correspondingly, this graph illustrates how the recall values change across different thresholds.
-#### PR_curve
+### PR_curve
 ![PR_curve](./asset/PR_curve.png)
 An integral visualization for any classification problem, this curve showcases the trade-offs between precision and recall at varied thresholds. It becomes especially significant when dealing with imbalanced classes.
-#### F1_curve
+### F1_curve
 ![F1_curve](./asset/F1_curve.png)
 The F1 Score is the harmonic mean of precision and recall, providing a balanced assessment of a model's performance while considering both false positives and false negatives.
-### training results
+## training results
 ![results](./asset/results.png)
-#### AP
+### AP
 * `AP`computes the area under the precision-recall curve, providing a single value that encapsulates the model's precision and recall performance.
 * `mAP50` Mean average precision 50 calculated at an intersection over union (IoU) threshold of 0.50. It's a measure of the model's accuracy considering only the "easy" detections.
 * `mAP50-95`The average of the mean average precision calculated at varying IoU thresholds, ranging from 0.50 to 0.95. It gives a comprehensive view of the model's performance across different levels of detection difficulty.
 
-#### box/cls/dfl loss
+### box/cls/dfl loss
 for more reference [yolo_loss](https://docs.ultralytics.com/reference/utils/loss/)
 * `box_loss`Box loss is a criterion class for computing training losses for bounding boxes,composed by IoU Loss and DFL Loss (Distribution Focal Loss)
 * `cls_loss`Classification loss measures how well the model classifies or identifies objects correctly. The cls_loss is scaled with pixels and helps determine the accuracy of the model's object classification capabilities.
 * `dfl_loss`Distribution Focal Loss is a criterion class for computing distribution focal loss,helping improve the model's ability to precisely locate objects in images by predicting probability distributions rather than direct coordinates.
 
 During the train process, you are expected to see the loss dropping in a fluctuating manner.It is common.
-# Build a MNIST CNN
+
 # Train DNN model (take YOLO for an example)
 ## Setup CUDA environment (Nvidia GPU required,better if with 10GB+ video memory )
 * install CUDA
