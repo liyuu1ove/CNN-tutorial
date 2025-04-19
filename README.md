@@ -18,6 +18,8 @@ If you have some trouble in setting up environment, you can use [google colab](h
 ## Basic ideas
 Lets begin by introducing some basic ideas in CNN and perform them in pytorch.
 ### Tensor
+More on [tensor](https://pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html)
+
 Tensor is the very basic data structure in machine learning. From a developer's prespective, tensor is the nickname of high-dimension array in machine learning. For example, we declare a 2D-array in C:
 ```C
 int arr[m][n];
