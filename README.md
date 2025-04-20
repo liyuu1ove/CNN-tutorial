@@ -60,7 +60,7 @@ tensor_a.T
 ```
 
 ## Neutral Network
-### Neuron model
+### Neuron
 ![neuron](asset\neuron.jpg)
 *from https://www.geeksforgeeks.org/neural-networks-a-beginners-guide/*
 
@@ -79,14 +79,49 @@ Hint! Reflect on matmal.
 ### Layers in multi-layer feedforward neural network
 ![multi-layer feedforward neural network](asset\nn-structure.jpg)
 
+*from https://www.geeksforgeeks.org/neural-networks-a-beginners-guide/*
+
+#### input layer
+This is where the network receives its input data. Each input neuron in the layer corresponds to a feature in the input data.
+#### hidden layers
+These layers perform most of the computational heavy lifting. A neural network can have one or multiple hidden layers. Each layer consists of units (neurons) that transform the inputs into something that the output layer can use.
+#### output layers
+The final layer produces the output of the model. The format of these outputs varies depending on the specific task (e.g., classification, regression).
+
+### Forward Propagation
+When data is input into the network, it passes through the network in the forward direction, from the input layer through the hidden layers to the output layer. This process is known as forward propagation. Finally a result will be produced at the output layer.
+
 ### Loss Function
+A loss function is a mathematical function that measures how well a model's predictions match the true outcomes. It provides a quantitative metric for the accuracy of the model's predictions, which can be used to guide the model's training process. The goal of a loss function is to guide optimization algorithms in adjusting model parameters to reduce this loss over time.
+
+Loss functions come in various forms, each suited to different types of problems. In different tasks such as regression,classification or detection.
 
 ### Back propagation and Optimizer
+![backpropagation](asset\backpropagation.png)
+*from https://www.geeksforgeeks.org/backpropagation-in-neural-network/*
+
+
+The most important equation:
+$b^{[l]}j\leftarrow b^{[l]}_j-\alpha \frac{\partial L}{\partial b^{[l]}_j}$ $w^{[l]}{jk}\leftarrow w^{[l]}{jk}-\alpha\frac{\partial L}{\partial w^{[l]}{jk}}$
+
+$w$ is the weight 
+
+$a$ is the learning rate
+
+$L$ is the loss function
+
+$\partial$ represents the Optimizer known as Gradient Descent
+
+
+Backpropagation is also known as "Backward Propagation of Errors" and it is a method used to train neural network . Its goal is to reduce the difference between the model’s predicted output and the actual output by adjusting the weights and biases in the network.
+
+Backpropagation is performed by ``Optimizer`` in PyTorch
 
 ## CNN
 Convolutional Neural Network (CNN) is an advanced version of artificial neural networks,primarily designed to extract features from grid-like matrix datasets. This is particularly useful for visual datasets such as images or videos, where data patterns play a crucial role.
 ### CNN structure
 ![structure](asset\structure.jpeg)
+
 *from https://www.geeksforgeeks.org/apply-a-2d-max-pooling-in-pytorch/*
 
 [Yolov8 structure](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/models/v8/yoloe-v8.yaml)
@@ -106,8 +141,20 @@ Also see `maxpooling.py`
 
 # Build a CNN for MNIST
 ## Prepare a dataset
+Use MNIST dataset.
 ## Define a CNN
+### Activation Function
+ReLU (Rectified Linear Unit) has become the default choice in many architectures due to its simplicity and efficiency
+### Conv layers
+Extract features
+### Full connection (FC) layers
+Classify inputs.
 ## Choose a loss func and optimizer
+### Categorical Cross-Entropy Loss
+Categorical Cross-Entropy Loss is used for multiclass classification problems. It measures the performance of a classification model whose output is a probability distribution over multiple classes.
+### SGD optimizer
+Gradient descent is an iterative optimization algorithm used to minimize a loss function, which represents how far the model’s predictions are from the actual values. 
+In Stochastic Gradient Descent, the gradient is calculated for each training example.
 ## train
 ## test
 # Learn how to evaluation a model
@@ -235,33 +282,32 @@ During the train process, you are expected to see the loss dropping in a fluctua
   $conda:
   (base)conda activate YOLO
   (YOLO)
-* install [pytorch](https://pytorch.org/get-started/locally/)
+* Install [pytorch](https://pytorch.org/get-started/locally/)
   ```shell
   $conda:
   # select your vision on the website!
   (YOLO) conda install pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 pytorch-cuda=12.1 -c pytorch -c nvidia 
-  
+  ```
+* Install ultralytics
 
-* install ultralytics
-
-  YOLO core code is packed in ultralytics lib  
+  YOLO core code is packed in ultralytics library 
   ```shell
   $conda 
   (YOLO) pip install ultralytics
   ```
 
-* clone ultralytics git repo
+* Clone ultralytics git repo
   ```bash
-  $git bash
+  $git
   git clone https://github.com/ultralytics/ultralytics
   ```
   all models are included in the repo,so just clone the newest one.
 
-* run enviornment
+* Test enviornment
   ```bash
-  $python
-  cd DNNmanual/yolo
-  python test_cuda.py
+  $conda
+  (YOLO) cd DNNmanual/yolo
+  (YOLO) python test_cuda.py
   ```
   ```
   output:
@@ -276,12 +322,12 @@ During the train process, you are expected to see the loss dropping in a fluctua
   #And an image will show
   ```
 ## Train
-### Building datasets(standard YOLO format)
+### Label your images
 * Labelimg
 
-  download on [labelimg](https://github.com/HumanSignal/labelImg)
+  download on [labelImg](https://github.com/HumanSignal/labelImg)
 
- * **build labelimg** on windows
+* Build LabelImg on windows
     ```shell
     $conda
     (base)conda create -n Labelimg python=3.8
@@ -290,11 +336,16 @@ During the train process, you are expected to see the loss dropping in a fluctua
     (Labelimg)conda install -c anaconda lxml
     (Labelimg)cd path/to/labelimg #change to you dir
     (Labelimg)pyrcc5 -o libs/resources.py resources.qrc
-    (Labelimg)python labelImg.py  #run labelImg
-    (Labelimg)python labelImg.py -i [path/to/images/dir] -o [path/to/save/dir] -l [path/to/prebuild/label.txt]
-    Or (Labelimg)python labelImg.py -d [path/to/dataset/dir] -l [path/to/prebuild/label.txt]
     ```
-
+* Label your images
+  ```shell
+  $conda
+  (Labelimg)python labelImg.py  #run labelImg
+  Or (Labelimg)python labelImg.py -i [path/to/images/dir] -o [path/to/save/dir] -l [path/to/prebuild/label.txt]
+  Or (Labelimg)python labelImg.py -d [path/to/dataset/dir] -l [path/to/prebuild/label.txt]
+  ```
+  save your images and labels to /data
+### Build datasets (YOLO format)
 * The procedure to create train/val/test files is automated by using **gen_data_yolo.py** 
   ```bash
   $bash:
@@ -302,83 +353,10 @@ During the train process, you are expected to see the loss dropping in a fluctua
   ```
 
   The func will split data in ./dataset/data in proportion to ./dataset/test | train | val
-* The format of the data set is known as Darknet YOLO, Each image corresponds to a .txt label file. The label format is based on YOLO's data set label format: "category cx cy wh", where category is the category subscript, cx, cy are the coordinates of the center point of the normalized label box, and w, h are the normalized label box The width and height, .txt label file content example as follows:
-  ```
-  11 0.344192634561 0.611 0.416430594901 0.262
-  14 0.509915014164 0.51 0.974504249292 0.972
-  ```
-* The image and its corresponding label file have the same name and are stored in the same directory. The data file structure is as follows:
-  ```
-  dataset
-  ├── train
-  │   ├── 000001.jpg
-  │   ├── 000001.txt
-  │   ├── 000002.jpg
-  │   ├── 000002.txt
-  │   ├── 000003.jpg
-  │   └── 000003.txt
-  └── val
-      ├── 000043.jpg
-      ├── 000043.txt
-      ├── 000057.jpg
-      ├── 000057.txt
-      ├── 000070.jpg
-      └── 000070.txt
-  ```
-* Generate a dataset path(use absolute path) .txt file, the example content is as follows：
-  
-  train.txt
-  ```
-  C:/Desktop/YOLO/dataset/train/000001.jpg
-  C:/Desktop/YOLO/dataset/train/000002.jpg
-  C:/Desktop/YOLO/dataset/train/000003.jpg
-  ```
-  val.txt
-  ```
-  C:/Desktop/YOLO/dataset/val/000070.jpg
-  C:/Desktop/YOLO/dataset/val/000043.jpg
-  C:/Desktop/YOLO/dataset/val/000057.jpg
-  ```
-* Generate the .names category label file, the sample content is as follows:
- 
-  category.names
-  ```
-  person
-  bicycle
-  car
-  motorbike
-  ...
-  
-  ```
-* The directory structure of the finally constructed training data set is as follows:
-  ```
-  .
-  ├── category.names        # .names category label file
-  ├── train                 # train dataset
-  │   ├── 000001.jpg
-  │   ├── 000001.txt
-  │   ├── 000002.jpg
-  │   ├── 000002.txt
-  │   ├── 000003.jpg
-  │   └── 000003.txt
-  ├── train.txt              # train dataset path .txt file
-  ├── val                    # val dataset
-  │   ├── 000043.jpg
-  │   ├── 000043.txt
-  │   ├── 000057.jpg
-  │   ├── 000057.txt
-  │   ├── 000070.jpg
-  │   └── 000070.txt
-  └── val.txt 
-  ├── test                    # val dataset
-  │   ├── 000043.jpg
-  │   ├── 000043.txt   
-  └── test.txt             # val dataset path .txt file
 
-  ```
-  
+  For more about the format refer to [format](data_format.md)
 ### Build the training dataset.yaml configuration file
-* ball.yaml for reference
+* example.yaml for reference
   ```
   path: ./dataset # dataset root dir
   train: train.txt # train images (relative to 'path')
@@ -402,52 +380,48 @@ During the train process, you are expected to see the loss dropping in a fluctua
   #no other change needed
   ```
 * Perform training tasks in CLI
-  ```conda
+  ```shell
   $conda
-  (YOLO)path/to/ultralytics> 
- * Build a new model from YAML and start training from scratch
-    ```shell
-    $conda
-    (YOLO)path/to/ultralytics>yolo detect train data=coco8.yaml model=yolo11n.yaml epochs=100 batch=16
-    ```
- * Start training from a pretrained *.pt model
-    ```shell
-    yolo detect train data=coco8.yaml model=yolo11n.pt epochs=100
-    ```
- * Build a new model from YAML, transfer pretrained weights to it and start training
-    ```shell
-    yolo detect train data=coco8.yaml model=yolo11n.yaml pretrained=yolo11n.pt epochs=100 batch=16
-    ```
-* Perform training tasks using Python API
-  ```bash
-  $bash
-  python train.py #change parameters in train.py
+  #Build a new model from YAML and start training from scratch
+  (YOLO)path/to/ultralytics>yolo detect train data=coco8.yaml model=yolo11n.yaml epochs=100 batch=16
+  #Start training from a pretrained *.pt model
+  (YOLO)path/to/ultralytics>yolo detect train data=coco8.yaml model=yolo11n.pt epochs=100
+  #Build a new model from YAML, transfer pretrained weights to it and start training
+  (YOLO)path/to/ultralytics>yolo detect train data=coco8.yaml model=yolo11n.yaml pretrained=yolo11n.pt epochs=100 batch=16
   ```
+* Perform training tasks using Python API
+  ``train.py``
 
   param:
 
-  *model* calls the model you want, it will call yolon if you use the name yolon.yaml 
+  ``model`` calls the model you want, it will call yolon if you use the name yolon.yaml 
   
-  *pretrained* uses pretrained model to enhance the performance of your model, the pretrained model will be downloaded automatically when you use the pretrained parameter
+  ``pretrained`` uses pretrained model to enhance the performance of your model, the pretrained model will be downloaded automatically when you use the pretrained parameter
 
-  *epochs* is the total number of rounds you run. Refer to Internet for more info.
+  ``epochs`` is the total number of rounds you run. Refer to Internet for more info.
 
-  *batch* is the number of picture put in GPU at one time.Take in three kinds of parameter. Set as an integer (e.g., batch=16), auto mode for 60% GPU memory utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70).#best pratice -1 or 0.80
+  ``batch`` is the number of picture put in GPU at one time.Take in three kinds of parameter. Set as an integer (e.g., batch=16), auto mode for 60% GPU memory utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70).#best pratice -1 or 0.80
 ## Evaluation 
 * test on test/ to see model`s **Generalization ability**
   ```shell
   conda$
   (YOLO)path/to/ultralytics>yolo predict model=dir/to/your/best.pt(ex. runs/detect/train/weights/best.pt) source=dir/to/your/test_folders
   ```
-    result will save in ultralytics/runs/predict
+  Perform test tasks using Python API
+  ``test.py``
+
+  result will save in ultralytics/runs/predict
 * val on val to fine-tune superparameters
   ```shell
   conda$
   (YOLO)path/to/ultralytics>yolo val model=dir/to/your/best.pt(ex. runs/detect/train/weights/best.pt) data=dir/to/your/data.yaml
   ```
-    result will save in ultralytics/runs/val
+  Perform val tasks using Python API
+  ``val.py``
+
+  result will save in ultralytics/runs/val
     
-    you can see the graph to evaluate training superparams
+  you can see the graph to evaluate training superparams
 # Deploy
 ## Interact with onnx
 ### export onnx format model
