@@ -95,9 +95,11 @@ _, predictions = torch.max(outputs, 1)
 
 fig, axes = plt.subplots(1, 6, figsize=(12, 4))
 for i in range(6):
-    bias=3#show different images
+    bias=3 #show different images
     images=images.cpu()
     axes[i].imshow(images[i+bias][0], cmap='gray')
     axes[i].set_title(f"Label: {labels[i+bias]}\nPred: {predictions[i+bias]}")
     axes[i].axis('off')
 plt.show()
+
+# from https://www.runoob.com/pytorch/pytorch-cnn.html
