@@ -7,7 +7,7 @@ Download and setup conda on [conda](https://anaconda.org/anaconda/conda) or [Tsi
 $conda
 (base)conda create -n pytorch_cpu python=3.9
 ```
-Use [pytorch](https://pytorch.org/) python API to build a MNIST-recognize CNN. Pytorch can run on a local machine using CPU, so don't worry about the NVIDIA GPU requirement.
+Use [pytorch](https://pytorch.org/) python API to build a CNN to recognize MNIST. Pytorch can run on a local machine using CPU, so don't worry about the NVIDIA GPU requirement.
 
 ```shell
 $conda
@@ -15,6 +15,10 @@ $conda
 (pytorch_cpu)pip3 install torch torchvision torchaudio
 ```
 If you have some trouble in setting up environment, you can use [google colab](https://colab.research.google.com/github/pytorch/tutorials/blob/gh-pages/_downloads/0e6615c5a7bc71e01ff3c51217ea00da/tensorqs_tutorial.ipynb#scrollTo=Pzb1CuJSbIVT)
+
+Run "test_pytorch" to check if pytorch is available.
+
+
 ## Basic ideas
 Lets begin by introducing some basic ideas in CNN and perform them in pytorch.
 ### Tensor
