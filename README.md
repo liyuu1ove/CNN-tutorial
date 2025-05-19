@@ -16,7 +16,7 @@ $conda
 ```
 If you have some trouble in setting up environment, you can use [google colab](https://colab.research.google.com/github/pytorch/tutorials/blob/gh-pages/_downloads/0e6615c5a7bc71e01ff3c51217ea00da/tensorqs_tutorial.ipynb#scrollTo=Pzb1CuJSbIVT)
 
-Run "test_pytorch" to check if pytorch is available.
+Run `test_pytorch` to check if pytorch is available.
 
 
 ## Basic ideas
