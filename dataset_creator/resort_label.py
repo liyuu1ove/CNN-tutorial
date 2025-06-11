@@ -1,7 +1,7 @@
 import os
 
 def file_rename():
-    num = 411
+    num = 0
     source_dir = "./raw"
     target_dir = "./dataset/new"
     filelist = os.listdir(source_dir)
